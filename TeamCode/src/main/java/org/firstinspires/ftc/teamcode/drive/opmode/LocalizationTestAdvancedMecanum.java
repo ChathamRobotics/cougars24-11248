@@ -15,7 +15,10 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  * encoder localizer heading may be significantly off if the track width has not been tuned).
  */
 @TeleOp(group = "drive")
-public class LocalizationTestMecanum extends LinearOpMode {
+public class LocalizationTestAdvancedMecanum extends LinearOpMode {
+
+    private float Motorpower = 0.4f;
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -27,13 +30,30 @@ public class LocalizationTestMecanum extends LinearOpMode {
         while (!isStopRequested()) {
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            -gamepad1.left_stick_y * 0.4,
-                            -gamepad1.left_stick_x * 0.4,
-                            -gamepad1.right_stick_x * 0.4
+                            -gamepad1.left_stick_y * Motorpower,
+                            -gamepad1.left_stick_x * Motorpower,
+                            -gamepad1.right_stick_x * Motorpower
                     )
             );
 
             drive.update();
+
+            // Quick Adjust Power
+            if (gamepad1.y) {
+                Motorpower = 0.8f;
+            } else if (gamepad1.a) {
+                Motorpower = 0.4f;
+            }
+            if (gamepad1.left_bumper) {
+                Motorpower = 0.9f;
+
+            } else if (gamepad1.right_bumper) {
+                Motorpower = 0.2f;
+
+            } else if (!gamepad1.right_bumper && !gamepad1.left_bumper) {
+                Motorpower = 0.4f;
+
+            }
 
             Pose2d poseEstimate = drive.getPoseEstimate();
             telemetry.addData("x", poseEstimate.getX());
