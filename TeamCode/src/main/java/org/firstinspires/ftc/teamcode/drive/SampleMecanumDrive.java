@@ -72,7 +72,7 @@ public class SampleMecanumDrive extends MecanumDrive {
     private TrajectoryFollower follower;
 
     private DcMotorEx leftFront, leftRear, rightRear, rightFront;
-    private List<DcMotorEx> motors;
+    public List<DcMotorEx> motors;
 
     private IMU imu;
     private VoltageSensor batteryVoltageSensor;

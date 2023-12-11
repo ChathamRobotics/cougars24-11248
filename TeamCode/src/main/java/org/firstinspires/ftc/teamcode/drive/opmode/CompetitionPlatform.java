@@ -16,12 +16,15 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  *
  * This is the entire robot
  *
+ * capitalization rules - pascal case (variables): first letter lowercase, first letter of every word after is uppercase
+ * classes: first letter of each word is uppercase
+ * constants - upper snake case - all capitalized with underscores inbetween
  */
 @TeleOp(group = "drive")
-public class Competitionplatform extends LinearOpMode {
+public class CompetitionPlatform extends LinearOpMode {
 
-    DcMotorEx linearslide = null;
-    DcMotorEx rpone = null;
+    DcMotorEx linearSlide = null;
+    DcMotorEx rpOne = null;
     DcMotorEx rptwo = null;
     DcMotorEx intakemotor = null;
     Servo claw = null;
@@ -49,8 +52,8 @@ public class Competitionplatform extends LinearOpMode {
 
         // intense motor and servo mapping
         // don't touch
-        linearslide = hardwareMap.get(DcMotorEx.class, "linearslide");
-        rpone = hardwareMap.get(DcMotorEx.class, "rpone");
+        linearSlide = hardwareMap.get(DcMotorEx.class, "linearslide");
+        rpOne = hardwareMap.get(DcMotorEx.class, "rpone");
         rptwo = hardwareMap.get(DcMotorEx.class, "rptwo");
         intakemotor = hardwareMap.get(DcMotorEx.class, "intakemotor");
 
@@ -58,37 +61,37 @@ public class Competitionplatform extends LinearOpMode {
         intakeclaw = hardwareMap.get(Servo.class, "intakeclaw");
         pivot = hardwareMap.get(Servo.class, "pivot");
 
-        linearslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rpone.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        linearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rpOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rptwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intakemotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //motor direction
-        linearslide.setDirection(DcMotorSimple.Direction.REVERSE);
-        rpone.setDirection(DcMotorSimple.Direction.FORWARD);
+        linearSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        rpOne.setDirection(DcMotorSimple.Direction.FORWARD);
         rptwo.setDirection(DcMotorSimple.Direction.FORWARD);
         intakemotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        linearslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        rpone.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        linearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rpOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rptwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         intakemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         //auton fixer thingy
-        linearslide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rpone.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rpOne.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rptwo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakemotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        linearslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rpone.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        linearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rpOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rptwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intakemotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //POWER
 
-        linearslide.setPower(0);
-        rpone.setPower(0);
+        linearSlide.setPower(0);
+        rpOne.setPower(0);
         rptwo.setPower(0);
         intakemotor.setPower(0);
 
@@ -105,7 +108,7 @@ public class Competitionplatform extends LinearOpMode {
 
         while (!isStopRequested()) {
 
-            telemetry.addData("pos", linearslide.getCurrentPosition());
+            telemetry.addData("pos", linearSlide.getCurrentPosition());
             telemetry.addData("pivotpos", pivot.getPosition());
             telemetry.addData("clawpos", claw.getPosition());
 
@@ -148,8 +151,8 @@ public class Competitionplatform extends LinearOpMode {
             }
             // Linearslide reset encoders
             if (gamepad2.triangle) { // AKA Y
-                linearslide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                linearslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                linearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
 
             // Claw
@@ -158,12 +161,12 @@ public class Competitionplatform extends LinearOpMode {
                 claw.setPosition(0.75);
             } else if (gamepad2.right_bumper) {
                 // release
-                claw.setPosition(0.4);
+                claw.setPosition(0.44);
             }
             //pivot
             if (gamepad2.square) {
                 // in
-                pivot.setPosition(0.78);
+                pivot.setPosition(0.7765);
             } else if (gamepad2.circle) {
                 // out
                 pivot.setPosition(0.325);
@@ -201,51 +204,51 @@ public class Competitionplatform extends LinearOpMode {
 
 // DESPARATELY NEEDS REVISION - WILL FIX AFTER THIS WEEKEND
             // linear slide
-            if ((gamepad2.left_stick_y * linearslidepower * -1 > 0 && linearslide.getCurrentPosition() < CLAW_LIFT_MAX - 50)
-                    || (gamepad2.left_stick_y * linearslidepower * -1 > 0 && linearslide.getCurrentPosition() < 100)
-                    || (!(linearslide.getCurrentPosition() <= 100) && gamepad2.left_stick_y != 0 && !(linearslide.getCurrentPosition() >= CLAW_LIFT_MAX - 50)))
+            if ((gamepad2.left_stick_y * linearslidepower * -1 > 0 && linearSlide.getCurrentPosition() < CLAW_LIFT_MAX - 50)
+                    || (gamepad2.left_stick_y * linearslidepower * -1 > 0 && linearSlide.getCurrentPosition() < 100)
+                    || (!(linearSlide.getCurrentPosition() <= 100) && gamepad2.left_stick_y != 0 && !(linearSlide.getCurrentPosition() >= CLAW_LIFT_MAX - 50)))
             {
 
                 if (gamepad2.left_stick_y * -1 < 0) {
-                    linearslide.setPower(gamepad2.left_stick_y * linearslidepower * -1);
+                    linearSlide.setPower(gamepad2.left_stick_y * linearslidepower * -1);
                     telemetry.addData("currently moving", "if1");
 
                 } else if (gamepad2.left_stick_y != 0) {
-                    linearslide.setPower(gamepad2.left_stick_y * linearslidepower * -1);
-                    linearslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    linearslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    linearSlide.setPower(gamepad2.left_stick_y * linearslidepower * -1);
+                    linearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    linearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
                     telemetry.addData("currently moving", "clawLift (if2)");
-                    telemetry.addData("clawLift Power", linearslide.getPower());
+                    telemetry.addData("clawLift Power", linearSlide.getPower());
 
                 } else {
-                    linearslide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    linearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
                     telemetry.addData("currently moving", "if3");
                 }
             }
 
-             else if(linearslide.getCurrentPosition() >= 100 && linearslide.getCurrentPosition() <= CLAW_LIFT_MAX - 50) {
-                linearslide.setPower(0);
-            } else if (linearslide.getCurrentPosition() < 100) {
-                 if (linearslide.getCurrentPosition() < 0) {
-                    linearslide.setPower(linearslidepower * 0.1);
+             else if(linearSlide.getCurrentPosition() >= 100 && linearSlide.getCurrentPosition() <= CLAW_LIFT_MAX - 50) {
+                linearSlide.setPower(0);
+            } else if (linearSlide.getCurrentPosition() < 100) {
+                 if (linearSlide.getCurrentPosition() < 0) {
+                    linearSlide.setPower(linearslidepower * 0.1);
                     telemetry.addData("currently moving", "if4");
                 }
-                linearslide.setTargetPosition(0);
-                linearslide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                linearSlide.setTargetPosition(0);
+                linearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
-        else if(linearslide.getCurrentPosition() > CLAW_LIFT_MAX - 50)
+        else if(linearSlide.getCurrentPosition() > CLAW_LIFT_MAX - 50)
             {
-                if (linearslide.getCurrentPosition() > CLAW_LIFT_MAX) {
-                    linearslide.setPower(linearslidepower * 0.1);
+                if (linearSlide.getCurrentPosition() > CLAW_LIFT_MAX) {
+                    linearSlide.setPower(linearslidepower * 0.1);
                     telemetry.addData("currently moving", "if6");
-                    linearslide.setTargetPosition(CLAW_LIFT_MAX);
-                    linearslide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    linearSlide.setTargetPosition(CLAW_LIFT_MAX);
+                    linearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 } else {
                     if (gamepad2.left_stick_y * -1 < 0) {
-                        linearslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                        linearslide.setPower(gamepad2.left_stick_y * linearslidepower * -1);
+                        linearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        linearSlide.setPower(gamepad2.left_stick_y * linearslidepower * -1);
                         telemetry.addData("currently moving", "reverseSpool");
                     }
                 }

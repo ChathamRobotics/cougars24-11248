@@ -38,7 +38,7 @@ public class LocalizationTestAdvancedMecanum extends LinearOpMode {
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y * Motorpower,
-                            -(gamepad1.right_trigger - gamepad1.left_trigger + gamepad1.left_stick_x) * Motorpower * 1.2,
+                            -(gamepad1.right_trigger - gamepad1.left_trigger - gamepad1.left_stick_x) * Motorpower * 1.2,
                             -gamepad1.right_stick_x * Motorpower
                     )
             );
