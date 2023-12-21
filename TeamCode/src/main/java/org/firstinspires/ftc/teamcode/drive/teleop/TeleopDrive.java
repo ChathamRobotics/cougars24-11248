@@ -17,7 +17,7 @@ public class TeleopDrive extends ModuleIntegrator {
     }
 
     public void move(float forward, float strafe, float turn) {
-        setWeightedDrivePower(new Pose2d(forward * speed, strafe * -speed, turn * -speed));
+        setWeightedDrivePower(new Pose2d(forward * -speed, strafe * -speed, turn * -speed));
         update();
     }
     public void setSpeed(float setSpeed) {
