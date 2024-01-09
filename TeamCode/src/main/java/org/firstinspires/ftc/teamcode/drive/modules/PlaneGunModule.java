@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.drive.modules;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class ClawModule {
+public class PlaneGunModule {
 
     private final Servo claw;
-    public ClawModule(HardwareMap hwMap) {
-        claw = hwMap.get(Servo.class, "claw");
+    public PlaneGunModule(HardwareMap hwMap) {
+        claw = hwMap.get(Servo.class, "gun");
         claw.scaleRange(0, 1);
         claw.setDirection(Servo.Direction.REVERSE);
     }

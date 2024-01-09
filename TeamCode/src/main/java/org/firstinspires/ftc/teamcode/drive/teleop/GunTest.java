@@ -8,28 +8,28 @@ import org.firstinspires.ftc.teamcode.drive.opmode.ModuleIntegrator;
 
 import java.util.Arrays;
 
-@TeleOp(name = "MecanumTest")
-public class MecanumTest extends LinearOpMode {
+@TeleOp(name = "Gun Test")
+public class GunTest extends LinearOpMode {
 
         float SPEED = 0.75f;
         TeleopDrive robot;
 
         @Override
         public void runOpMode() {
-            robot = new TeleopDrive(hardwareMap, Arrays.asList(), SPEED);
+            robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.GUN), SPEED);
 
             waitForStart();
 
             while (opModeIsActive()) {
+                if (gamepad2.circle) robot.gun.setState(1);
+                if (gamepad2.triangle) robot.gun.setState(0);
 
                 robot.move(gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger + gamepad1.left_stick_x, gamepad1.right_stick_x);
                 if (gamepad1.left_bumper) robot.setSpeed(0.2f);
                 if (gamepad1.right_bumper) robot.setSpeed(1);
                 if (!gamepad1.left_bumper && !gamepad1.right_bumper) robot.setSpeed(0.75f);
-                if (!gamepad1.left_bumper && !gamepad1.right_bumper) robot.setSpeed(0.75f);
 
                 Pose2d poseEstimate = robot.getPoseEstimate();
-
             }
         }
     }

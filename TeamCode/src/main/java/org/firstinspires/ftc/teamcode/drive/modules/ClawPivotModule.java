@@ -6,10 +6,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ClawPivotModule {
     private Servo clawPivot;
     public ClawPivotModule(HardwareMap hwMap) {
-        clawPivot = hwMap.get(Servo.class, "clawPivot");
-        clawPivot.scaleRange(0, 0.8);
+        clawPivot = hwMap.get(Servo.class, "clawpivot");
+        clawPivot.scaleRange(0, 1);
         clawPivot.setDirection(Servo.Direction.REVERSE);
-
     }
 
     /**

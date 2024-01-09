@@ -10,27 +10,28 @@ import java.util.Arrays;
 
 @TeleOp(name = "Competition Platform Two")
 public class CompetitionPlatformTwo extends LinearOpMode {
+    // "My Pizza Crystalized" - Chip
 
         float SPEED = 0.75f;
         TeleopDrive robot;
 
         @Override
         public void runOpMode() {
-            robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.ROTATION, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.LINEAR_SLIDE, ModuleIntegrator.Module.CLAW), SPEED);
+            robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.ROTATION, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.LINEAR_SLIDE, ModuleIntegrator.Module.CLAW, ModuleIntegrator.Module.GUN, ModuleIntegrator.Module.PIVOTTWO), SPEED);
 
             waitForStart();
 
             while (opModeIsActive()) {
                 robot.linearSlide.move(gamepad2.right_stick_y * 0.5f, false);
-                if(gamepad2.left_stick_y > 0) robot.rotation.setPosPivot(1);
-                if(gamepad2.left_stick_y < 0) robot.rotation.setPosPivot(0);
-                if(gamepad2.dpad_left) robot.rotation.setPosPivot(0.6f);
-                if (gamepad2.left_bumper) robot.claw.setState(0);
-                if (gamepad2.left_trigger != 0) robot.clawtwo.setState(0);
+                robot.rotation.movePivot(gamepad2.left_stick_y * 0.5f, false);
+                if (gamepad2.left_bumper) robot.claw.setState(0.8f);
+                if (gamepad2.left_trigger != 0) robot.clawtwo.setState(0.8f);
                 if (gamepad2.right_bumper) robot.claw.setState(1);
                 if (gamepad2.right_trigger != 0) robot.clawtwo.setState(1);
-                if (gamepad2.dpad_up) robot.pivot.setState(1);
-                if (gamepad2.dpad_down) robot.pivot.setState(0);
+                if (gamepad2.dpad_up) {robot.pivot.setState(1); robot.pivottwo.setState(1);}
+                if (gamepad2.dpad_down) {robot.pivot.setState(0.8f); robot.pivottwo.setState(0.8f);}
+                if (gamepad2.circle) robot.gun.setState(1);
+                if (gamepad2.triangle) robot.gun.setState(0);
 
                 robot.move(gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger + gamepad1.left_stick_x, gamepad1.right_stick_x);
                 if (gamepad1.left_bumper) robot.setSpeed(0.2f);
