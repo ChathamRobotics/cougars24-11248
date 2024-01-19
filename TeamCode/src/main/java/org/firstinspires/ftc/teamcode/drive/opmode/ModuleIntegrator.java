@@ -8,6 +8,9 @@ import org.firstinspires.ftc.teamcode.drive.modules.ClawPivotModule;
 import org.firstinspires.ftc.teamcode.drive.modules.ClawPivotModuleTwo;
 import org.firstinspires.ftc.teamcode.drive.modules.LiftRotationModule;
 import org.firstinspires.ftc.teamcode.drive.modules.PlaneGunModule;
+import org.firstinspires.ftc.teamcode.drive.modules.WinchServoModuleOne;
+import org.firstinspires.ftc.teamcode.drive.modules.WinchServoModuleTwo;
+import org.firstinspires.ftc.teamcode.drive.modules.WinchSystemModule;
 
 import java.util.List;
 
@@ -20,21 +23,23 @@ public class ModuleIntegrator extends SampleMecanumDrive {
         PIVOTTWO,
         LINEAR_SLIDE,
         ROTATION,
-
         GUN,
+        WINCHLIFTONE,
+        WINCHLIFTTWO,
+        WINCHSYSTEM,
     }
 
     public ClawModule claw;
     public ClawModuleTwo clawtwo;
     public ClawPivotModule pivot;
     public ClawLiftModule linearSlide;
+    public WinchServoModuleOne winchLiftOne;
 
+    public WinchServoModuleTwo winchLiftTwo;
+    public WinchSystemModule winchSystem;
     public ClawPivotModuleTwo pivottwo;
-
     public PlaneGunModule gun;
-
     public LiftRotationModule rotation;
-
 
     public ModuleIntegrator(HardwareMap hwMap, List<Module> modules) {
         super(hwMap);
@@ -47,6 +52,15 @@ public class ModuleIntegrator extends SampleMecanumDrive {
         if (modules.contains(Module.LINEAR_SLIDE)) {
             linearSlide = new ClawLiftModule(hwMap);
         }
+        if (modules.contains(Module.WINCHLIFTONE)) {
+            winchLiftOne = new WinchServoModuleOne(hwMap);
+        }
+        if (modules.contains(Module.WINCHLIFTTWO)) {
+            winchLiftTwo = new WinchServoModuleTwo(hwMap);
+        }
+        if (modules.contains(Module.WINCHSYSTEM)) {
+            winchSystem = new WinchSystemModule(hwMap);
+        }
         if (modules.contains(Module.PIVOTTWO)) {
             pivottwo = new ClawPivotModuleTwo(hwMap);
         }
@@ -56,7 +70,6 @@ public class ModuleIntegrator extends SampleMecanumDrive {
         if (modules.contains(Module.GUN)) {
             gun = new PlaneGunModule(hwMap);
         }
-
         if (modules.contains(Module.CLAWTWO)) {
             clawtwo = new ClawModuleTwo(hwMap);
         }

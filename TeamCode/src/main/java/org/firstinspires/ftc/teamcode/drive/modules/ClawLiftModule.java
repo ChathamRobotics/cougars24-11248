@@ -11,12 +11,12 @@ import java.util.List;
 
 public class ClawLiftModule {
 
-    private static final int MAX_SLIDE_POS = 1500;
+    private static final int MAX_SLIDE_POS = 4055;
     private static final int LIFT_MOTORS = 1;
     public List<DcMotorEx> clawLift = new ArrayList<>();
 
     public ClawLiftModule(HardwareMap hwMap) {
-        List<DcMotorSimple.Direction> motorDirections = Arrays.asList(DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD);
+        List<DcMotorSimple.Direction> motorDirections = Arrays.asList(DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
 
         for (int i = 1; i <= LIFT_MOTORS; i++) {
             DcMotorEx slideMotor = hwMap.get(DcMotorEx.class, "clawLift" + i);
@@ -27,6 +27,7 @@ public class ClawLiftModule {
         clawLift.forEach(motor -> {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         });
     }
 
