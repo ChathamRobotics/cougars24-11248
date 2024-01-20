@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.drive.opmode.ModuleIntegrator;
 
 import java.util.Arrays;
 
-@TeleOp(name = "Competition Platform Two")
-public class CompetitionPlatformTwo extends LinearOpMode {
+@TeleOp(name = "Big Papi Balling")
+public class BigPapiBalling extends LinearOpMode {
     // "My Pizza Crystalized" - Chip
 
         float SPEED = 0.6f;
@@ -30,8 +30,8 @@ public class CompetitionPlatformTwo extends LinearOpMode {
 
             while (opModeIsActive()) {
                 //before a full patch, keep in mind that linearslide is the rotater and rotation is the linear slide
-                robot.linearSlide.move(gamepad2.right_stick_y * 1, false);
-                robot.rotation.movePivot(-gamepad2.left_stick_y * 0.5f, false);
+                robot.linearSlide.move(-gamepad2.left_stick_y * 1, false);
+                robot.rotation.movePivot(-gamepad2.right_stick_y * 0.5f, false);
 
                 if (gamepad2.left_bumper) robot.claw.setState(0.8f);
                 if (gamepad2.left_trigger != 0) robot.claw.setState(1);
