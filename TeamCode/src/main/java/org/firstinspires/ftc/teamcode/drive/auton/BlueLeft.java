@@ -22,7 +22,7 @@ public class BlueLeft extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.ROTATION, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.LINEAR_SLIDE, ModuleIntegrator.Module.CLAW, ModuleIntegrator.Module.GUN, ModuleIntegrator.Module.PIVOTTWO, ModuleIntegrator.Module.WINCHSYSTEM, ModuleIntegrator.Module.WINCHLIFTONE, ModuleIntegrator.Module.WINCHLIFTTWO), SPEED);
+        robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.DRAWERSLIDE, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.SLIDEPIVOT, ModuleIntegrator.Module.CLAW, ModuleIntegrator.Module.GUN, ModuleIntegrator.Module.PIVOTTWO, ModuleIntegrator.Module.WINCHSYSTEM, ModuleIntegrator.Module.WINCHLIFTONE, ModuleIntegrator.Module.WINCHLIFTTWO), SPEED);
         Pose2d startPos = Locations.blueLeft;
 
         robot.setPoseEstimate(startPos);
@@ -38,22 +38,22 @@ public class BlueLeft extends LinearOpMode {
 
         robot.clawtwo.setState(0.8f);
         robot.claw.setState(0.8f);
-        robot.linearSlide.setPos(0.172f);
+        robot.slidePivot.setPos(0.172f);
         robot.pivottwo.setState(0.4f);
 
         waitForStart();
 
-        robot.linearSlide.setPos(0.2f);
+        robot.slidePivot.setPos(0.2f);
         robot.pivottwo.setState(0.4f);
-        robot.rotation.setPosPivot(0.25f);
+        robot.drawerSlide.setSlidePos(0.25f);
         robot.followTrajectorySequence(forward);
         robot.clawtwo.setState(1); // open
         robot.claw.setState(1);
         sleep(500);
         robot.followTrajectory(backward);
-        robot.rotation.goToPosPivot(0);
+        robot.drawerSlide.setSlidePos(0);
         robot.pivottwo.setState(0.6f);
-        robot.linearSlide.goToPos(0);
+        robot.slidePivot.goToPos(0);
 
     }
 
