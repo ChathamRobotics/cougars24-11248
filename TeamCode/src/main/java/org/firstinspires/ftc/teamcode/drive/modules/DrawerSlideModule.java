@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DrawerSlideModule {
 
-    private static final int MAX_LIFT_ROT = 1500;
+    private static final int MAX_LIFT_ROT = 750;
     private static final int ROTATION_MOTORS = 1;
     public List<DcMotorEx> clawRot = new ArrayList<>();
 
