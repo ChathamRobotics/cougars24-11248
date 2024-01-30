@@ -28,10 +28,10 @@ public class CoopControl extends LinearOpMode {
                 robot.drawerSlide.moveSlide((gamepad1.right_trigger - gamepad1.left_trigger)*0.5, false);
 
 
-                if (gamepad2.X) robot.claw.setState(0.8f);
-                if (gamepad2.X != 0) robot.claw.setState(1);
-                if (gamepad2.circle) robot.clawtwo.setState(0.8f); // close
-                if (gamepad2.circle != 0) robot.clawtwo.setState(1); // open
+                if (gamepad1.X) robot.claw.setState(0.8f);
+                if (gamepad1.X != 0) robot.claw.setState(1);
+                if (gamepad1.circle) robot.clawtwo.setState(0.8f); // close
+                if (gamepad1.circle != 0) robot.clawtwo.setState(1); // open
                 if (gamepad1.dpad_up) {robot.pivot.setState(1); robot.pivottwo.setState(1);}
                 if (gamepad1.dpad_down) {robot.pivot.setState(0.6f); robot.pivottwo.setState(0.6f);}
                 if (gamepad1.dpad_right) {robot.pivot.setState(0.9f); robot.pivottwo.setState(0.9f);}
