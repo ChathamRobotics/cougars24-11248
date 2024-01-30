@@ -19,7 +19,7 @@ public class GunIt extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.ROTATION, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.LINEAR_SLIDE, ModuleIntegrator.Module.CLAW), SPEED);
+        robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.CLAW), SPEED);
 
         waitForStart();
 

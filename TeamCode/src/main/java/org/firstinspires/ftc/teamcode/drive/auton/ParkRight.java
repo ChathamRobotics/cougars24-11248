@@ -22,7 +22,7 @@ public class ParkRight extends LinearOpMode {
 
         waitForStart();
 
-            robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.ROTATION, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.LINEAR_SLIDE, ModuleIntegrator.Module.CLAW), SPEED);
+            robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.CLAW), SPEED);
 
             runtime.reset();
             while (runtime.seconds() < 1) {

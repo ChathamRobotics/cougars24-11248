@@ -30,11 +30,11 @@ public class BlueLeft extends LinearOpMode {
         TrajectorySequence forward = robot.trajectorySequenceBuilder(startPos)
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(20))))
                 .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
-                .back(8)
+                .back(11)
                 .build();
 
         Trajectory backward = robot.trajectoryBuilder(forward.end())
-                .forward(11).build();
+                .forward(15).build();
 
         robot.clawtwo.setState(0.8f);
         robot.claw.setState(0.8f);
@@ -45,7 +45,7 @@ public class BlueLeft extends LinearOpMode {
 
         robot.slidePivot.setPos(0.2f);
         robot.pivottwo.setState(0.4f);
-        robot.drawerSlide.setSlidePos(0.25f);
+        robot.drawerSlide.setSlidePos(0.6f);
         robot.followTrajectorySequence(forward);
         robot.clawtwo.setState(1); // open
         robot.claw.setState(1);
@@ -54,6 +54,7 @@ public class BlueLeft extends LinearOpMode {
         robot.drawerSlide.setSlidePos(0);
         robot.pivottwo.setState(0.6f);
         robot.slidePivot.goToPos(0);
+
 
     }
 

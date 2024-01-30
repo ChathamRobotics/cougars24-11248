@@ -16,7 +16,7 @@ public class DrawerSlideModule {
     public List<DcMotorEx> clawRot = new ArrayList<>();
 
     public DrawerSlideModule(HardwareMap hwMap) {
-        List<DcMotorSimple.Direction> motorDirections = Arrays.asList(DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
+        List<DcMotorSimple.Direction> motorDirections = Arrays.asList(DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD);
 
         for (int i = 1; i <= ROTATION_MOTORS; i++) {
             DcMotorEx slideMotor = hwMap.get(DcMotorEx.class, "clawRot" + i);

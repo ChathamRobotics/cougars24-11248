@@ -39,6 +39,7 @@ public class CompetitionPlatformTwo extends LinearOpMode {
                 if (gamepad2.dpad_left) {robot.pivot.setState(0.4f); robot.pivottwo.setState(0.4f);}
                 if (gamepad2.circle) robot.gun.setState(1);
                 if (gamepad2.triangle) robot.gun.setState(0);
+                if (gamepad2.square) {robot.slidePivot.setPos(0.2f);}
 
                 robot.move(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
                 robot.winchSystem.move(gamepad1.right_trigger - gamepad1.left_trigger, false);
