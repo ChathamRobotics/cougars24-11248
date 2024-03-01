@@ -85,6 +85,7 @@ public class RedRightFull extends LinearOpMode {
                 .turn(Math.toRadians(-3))
                 .back(8)
                 .build();
+        // j
 
         TrajectorySequence toBackdropCenter = robot.trajectorySequenceBuilder(toCenter.end())
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
