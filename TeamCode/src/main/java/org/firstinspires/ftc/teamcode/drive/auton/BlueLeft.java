@@ -36,8 +36,8 @@ public class BlueLeft extends LinearOpMode {
         Trajectory backward = robot.trajectoryBuilder(forward.end())
                 .forward(15).build();
 
-        robot.clawtwo.setState(0.8f);
-        robot.claw.setState(0.8f);
+        robot.clawtwo.setState(0);
+        robot.claw.setState(0);
         robot.slidePivot.setPos(0.172f);
         robot.pivottwo.setState(0.4f);
 
@@ -50,6 +50,8 @@ public class BlueLeft extends LinearOpMode {
         robot.clawtwo.setState(1); // open
         robot.claw.setState(1);
         sleep(500);
+        robot.clawtwo.setState(0); // close
+        robot.claw.setState(0);
         robot.followTrajectory(backward);
         robot.drawerSlide.setSlidePos(0);
         robot.pivottwo.setState(0.6f);

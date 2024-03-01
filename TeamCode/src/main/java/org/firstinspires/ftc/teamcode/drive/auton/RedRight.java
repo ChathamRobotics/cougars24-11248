@@ -36,8 +36,8 @@ public class RedRight extends LinearOpMode {
         Trajectory backward = robot.trajectoryBuilder(forward.end())
                         .forward(15).build();
 
-        robot.clawtwo.setState(0.8f);
-        robot.claw.setState(0.8f);
+        robot.clawtwo.setState(0);
+        robot.claw.setState(0);
         robot.slidePivot.goToPos(0.172f);
         robot.pivottwo.setState(0.4f);
 

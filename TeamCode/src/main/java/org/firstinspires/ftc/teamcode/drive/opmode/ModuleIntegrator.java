@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.drive.modules.SlidePivotModule;
 import org.firstinspires.ftc.teamcode.drive.modules.WinchServoModuleOne;
 import org.firstinspires.ftc.teamcode.drive.modules.WinchServoModuleTwo;
 import org.firstinspires.ftc.teamcode.drive.modules.WinchSystemModule;
+import org.firstinspires.ftc.teamcode.drive.modules.WinchSystemModuleTwo;
 
 import java.util.List;
 
@@ -27,16 +28,21 @@ public class ModuleIntegrator extends SampleMecanumDrive {
         WINCHLIFTONE,
         WINCHLIFTTWO,
         WINCHSYSTEM,
+
+        WINCHSYSTEMTWO,
     }
 
     public ClawModule claw;
+
     public ClawModuleTwo clawtwo;
+
     public ClawPivotModule pivot;
     public SlidePivotModule slidePivot;
     public WinchServoModuleOne winchLiftOne;
 
     public WinchServoModuleTwo winchLiftTwo;
     public WinchSystemModule winchSystem;
+    public WinchSystemModuleTwo winchSystemTwo;
     public ClawPivotModuleTwo pivottwo;
     public PlaneGunModule gun;
     public DrawerSlideModule drawerSlide;
@@ -60,6 +66,9 @@ public class ModuleIntegrator extends SampleMecanumDrive {
         }
         if (modules.contains(Module.WINCHSYSTEM)) {
             winchSystem = new WinchSystemModule(hwMap);
+        }
+        if (modules.contains(Module.WINCHSYSTEMTWO)) {
+            winchSystemTwo = new WinchSystemModuleTwo(hwMap);
         }
         if (modules.contains(Module.PIVOTTWO)) {
             pivottwo = new ClawPivotModuleTwo(hwMap);
