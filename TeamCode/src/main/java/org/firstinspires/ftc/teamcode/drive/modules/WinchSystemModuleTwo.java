@@ -17,7 +17,7 @@ public class WinchSystemModuleTwo {
         List<DcMotorSimple.Direction> motorDirections = Arrays.asList(DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.REVERSE);
 
         for (int i = 1; i <= LIFT_MOTORS; i++) {
-            DcMotorEx slideMotor = hwMap.get(DcMotorEx.class, "winchSystem" + i + 1);
+            DcMotorEx slideMotor = hwMap.get(DcMotorEx.class, "winchSystem" + 2);
             slideMotor.setDirection(motorDirections.get(i - 1));
             clawLift.add(slideMotor);
         }

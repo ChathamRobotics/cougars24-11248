@@ -40,8 +40,17 @@ public class CoopControl extends LinearOpMode {
             if (gamepad2.triangle) robot.gun.setState(0);
             if (gamepad2.square) robot.winchLiftTwo.setState(1);
             if (gamepad2.cross) robot.winchLiftTwo.setState(0);
-            robot.winchSystem.move(gamepad2.right_stick_y, false);
-            robot.winchSystemTwo.move(gamepad2.left_stick_y, false);
+
+            if (Math.abs(gamepad2.right_stick_y) >= 0.5) {
+                robot.winchSystem.move(gamepad2.right_stick_y, false);
+                } else {robot.winchSystem.move(0, false);}
+            if (Math.abs(gamepad2.left_stick_y) >= 0.5) {
+                robot.winchSystemTwo.move(-gamepad2.left_stick_y, false);
+            } else {robot.winchSystemTwo.move(0, false);}
+
+            //robot.winchSystem.move(gamepad2.right_stick_y, false);
+            //robot.winchSystemTwo.move(-gamepad2.left_stick_y, false);
+
 
             //  if (gamepad1.left_bumper) robot.setSpeed(0.2f);
             //   if (gamepad1.right_bumper) robot.setSpeed(1);

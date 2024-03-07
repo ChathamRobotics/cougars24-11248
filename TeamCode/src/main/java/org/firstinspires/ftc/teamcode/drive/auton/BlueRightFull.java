@@ -22,8 +22,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.Arrays;
 import java.util.List;
 
-@Autonomous (name = "Blue Left Full Auton (BOARDSIDE)")
-public class BlueLeftFull extends LinearOpMode {
+@Autonomous (name = "Blue Right Full Auton (NON BOARDSIDE)")
+public class BlueRightFull extends LinearOpMode {
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
@@ -58,7 +58,7 @@ public class BlueLeftFull extends LinearOpMode {
         robot.pivot.setState(0.4f);
         robot.pivottwo.setState(0.4f);
 
-        Pose2d startPos = Locations.blueLeft;
+        Pose2d startPos = Locations.blueRight;
 
         robot.setPoseEstimate(startPos);
 
@@ -68,42 +68,15 @@ public class BlueLeftFull extends LinearOpMode {
                 .build();
 
         Trajectory toLeft = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(14, 31, Math.toRadians(180)), new TranslationalVelocityConstraint(15),new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(-18, 37, Math.toRadians(180)), new TranslationalVelocityConstraint(15),new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toCenter = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(14, 34, Math.toRadians(90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(-18, 34, Math.toRadians(90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toRight = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(10.5, 31, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
-                .build();
-        
-        TrajectorySequence toBackdropLeft = robot.trajectorySequenceBuilder(toLeft.end())
-                .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
-                .forward(0.5)
-                .strafeRight(8)
-                .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
-                .strafeRight(4)
-                .turn(Math.toRadians(3))
-                .back(8)
-                .build();
-
-        TrajectorySequence toBackdropCenter = robot.trajectorySequenceBuilder(toCenter.end())
-                .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
-                .forward(2)
-                .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
-                .strafeLeft(6)
-                .back(8)
-                .build();
-
-        TrajectorySequence toBackdropRight = robot.trajectorySequenceBuilder(toRight.end())
-                .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
-                .forward(2)
-                .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
-                .turn(Math.toRadians(3))
-                .back(8)
-                .strafeLeft(7.25)
+                .lineToLinearHeading(new Pose2d(-14.5, 35, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
 
@@ -118,7 +91,7 @@ public class BlueLeftFull extends LinearOpMode {
         }
 
         runtime.reset();
-        robot.setPoseEstimate(Locations.blueLeft);
+        robot.setPoseEstimate(Locations.blueRight);
 
         Recognition propRecognition = null;
 
@@ -208,30 +181,14 @@ public class BlueLeftFull extends LinearOpMode {
         robot.pivottwo.setState(0.4f);
         sleep(500);
 
-        switch (direction) {
-            case 1:
-                robot.followTrajectorySequence(toBackdropLeft);
-                telemetry.addLine("Left");
-                telemetry.update();
-                break;
-            case 2:
-                robot.followTrajectorySequence(toBackdropCenter);
-                telemetry.addLine("Center");
-                telemetry.update();
-                break;
-            case 3:
-                robot.followTrajectorySequence(toBackdropRight);
-                telemetry.addLine("Right");
-                telemetry.update();
-                break;
-        }
-        robot.clawtwo.setState(1); // open
-        sleep(500);
 
-        Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
+
+        /**Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
                 .lineToConstantHeading(new Vector2d(48,56)).build();
 
         robot.followTrajectory(backward);
+
+         **/
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
         robot.claw.setState(0);

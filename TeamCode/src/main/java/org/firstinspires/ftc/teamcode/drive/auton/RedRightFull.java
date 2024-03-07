@@ -22,7 +22,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.Arrays;
 import java.util.List;
 
-@Autonomous (name = "Red Right Full Auton")
+@Autonomous (name = "Red Right Full Auton (BOARDSIDE)")
 public class RedRightFull extends LinearOpMode {
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
@@ -30,7 +30,7 @@ public class RedRightFull extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "model_20240208_105447.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-            "RedElement",
+            "BlueElement","RedElement",
     };
 
     private TfodProcessor tfod;
@@ -59,22 +59,21 @@ public class RedRightFull extends LinearOpMode {
         Pose2d startPos = Locations.redRight;
 
         robot.setPoseEstimate(startPos);
-        robot.setPoseEstimate(Locations.redRight);
 
         Trajectory forward = robot.trajectoryBuilder(startPos)
-                .forward(18, new TranslationalVelocityConstraint(20), new ProfileAccelerationConstraint(20))
+                .forward(24, new TranslationalVelocityConstraint(20), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toRight = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(13, -37,Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(18, -31,Math.toRadians(180)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toCenter = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(14, -34,Math.toRadians(-90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(18, -34,Math.toRadians(-90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toLeft = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(10.5, -31, Math.toRadians(180)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(16.5, -31, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         TrajectorySequence toBackdropLeft = robot.trajectorySequenceBuilder(toLeft.end())
@@ -83,7 +82,7 @@ public class RedRightFull extends LinearOpMode {
                 .splineToLinearHeading(Locations.backdropRed, Math.toRadians(180))
                 .strafeRight(8)
                 .turn(Math.toRadians(-3))
-                .back(8)
+                .back(14)
                 .build();
         // j
 
@@ -91,21 +90,20 @@ public class RedRightFull extends LinearOpMode {
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
                 .forward(2)
                 .splineToLinearHeading(Locations.backdropRed, Math.toRadians(180))
-                .back(8)
-                .strafeRight(6)
+                .back(14)
+                .strafeRight(2)
                 .build();
 
         TrajectorySequence toBackdropRight = robot.trajectorySequenceBuilder(toRight.end())
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
                 .forward(2)
+                .strafeLeft(16)
+                .back(18)
                 .splineToLinearHeading(Locations.backdropRed, Math.toRadians(180))
                 .turn(Math.toRadians(-3))
-                .back(8)
-                .strafeLeft(7.25)
+                .back(16)
+                .strafeLeft(8)
                 .build();
-
-        Trajectory backward = robot.trajectoryBuilder(forward.end())
-                .forward(3).build();
 
         telemetry.addData(">", "Robot Initialized!");
         telemetry.addData(">", "Press start to start");
@@ -118,6 +116,7 @@ public class RedRightFull extends LinearOpMode {
         }
 
         runtime.reset();
+        robot.setPoseEstimate(Locations.redRight);
 
         Recognition propRecognition = null;
 
@@ -158,16 +157,13 @@ public class RedRightFull extends LinearOpMode {
         int direction = 0;
 
         if (propRecognition == null) {
-            // left
-            direction = 1;
+            // right
+            direction = 3;
         } else {
             double x = (propRecognition.getLeft() + propRecognition.getRight()) / 2;
             double y = (propRecognition.getTop()  + propRecognition.getBottom()) / 2;
 
-            if (x > 450) {
-                // right
-                direction = 3;
-            } else if (x > 100) {
+            if (y < 330 && x > 320) {
                 // center
                 direction = 2;
             } else {
@@ -200,7 +196,7 @@ public class RedRightFull extends LinearOpMode {
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
         robot.claw.setState(1);
-        sleep(500);
+        sleep(750);
         //robot.pivot.setState(0.8f);
         //robot.pivottwo.setState(0.8f);
         //sleep(500);
@@ -208,6 +204,7 @@ public class RedRightFull extends LinearOpMode {
         robot.drawerSlide.setSlidePos(0.5f);
         robot.pivot.setState(0.4f);
         robot.pivottwo.setState(0.4f);
+        robot.claw.setState(0);
         sleep(500);
 
         switch (direction) {
@@ -229,6 +226,10 @@ public class RedRightFull extends LinearOpMode {
         }
         robot.clawtwo.setState(1); // open
         sleep(500);
+
+        Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
+                .lineToConstantHeading(new Vector2d(48,-55)).build();
+
         robot.followTrajectory(backward);
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
@@ -261,7 +262,7 @@ public class RedRightFull extends LinearOpMode {
 
                 // The following default settings are available to un-comment and edit as needed to
                 // set parameters for custom models.
-                //.setModelLabels(LABELS)
+                .setModelLabels(LABELS)
                 //.setIsModelTensorFlow2(true)
                 //.setIsModelQuantized(true)
                 //.setModelInputSize(300)
