@@ -9,7 +9,7 @@ public class ClawModuleTwo {
     public ClawModuleTwo(HardwareMap hwMap) {
         clawtwo = hwMap.get(Servo.class, "clawtwo");
         clawtwo.setDirection(Servo.Direction.REVERSE);
-        clawtwo.scaleRange(0, 1);
+        clawtwo.scaleRange(0.35, 0.75);
     }
 
     /**

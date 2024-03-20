@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TeleopDrive extends ModuleIntegrator {
 
-    public float speed = 0.5f;
+    public float speed = 1;
 
     public TeleopDrive(HardwareMap hwMap, List<Module> modules, float setSpeed) {
         super(hwMap, modules);

@@ -9,7 +9,7 @@ public class ClawModule {
     public ClawModule(HardwareMap hwMap) {
         claw = hwMap.get(Servo.class, "claw");
         claw.setDirection(Servo.Direction.FORWARD);
-        claw.scaleRange(0, 1);
+        claw.scaleRange(0.35, 0.75);
     }
 
     /**

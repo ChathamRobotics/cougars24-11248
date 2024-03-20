@@ -38,7 +38,7 @@ public class BlueLeft extends LinearOpMode {
 
         robot.clawtwo.setState(0);
         robot.claw.setState(0);
-        robot.slidePivot.setPos(0.172f);
+        robot.slidePivot.setPos(0.178f);
         robot.pivottwo.setState(0.4f);
 
         waitForStart();

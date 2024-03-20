@@ -30,7 +30,7 @@ public class BlueLeftFull extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "model_20240208_105447.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-            "BlueElement",
+            "BlueElement"
     };
 
     private TfodProcessor tfod;
@@ -54,7 +54,7 @@ public class BlueLeftFull extends LinearOpMode {
 
         robot.clawtwo.setState(0);
         robot.claw.setState(0); //close ^
-        robot.slidePivot.setPos(0.172f);
+        robot.slidePivot.setPos(0.2f);
         robot.pivot.setState(0.4f);
         robot.pivottwo.setState(0.4f);
 
@@ -68,42 +68,40 @@ public class BlueLeftFull extends LinearOpMode {
                 .build();
 
         Trajectory toLeft = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(14, 31, Math.toRadians(180)), new TranslationalVelocityConstraint(15),new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(12.5, 33, Math.toRadians(180)), new TranslationalVelocityConstraint(15),new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toCenter = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(14, 34, Math.toRadians(90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(15, 35.2, Math.toRadians(90) ), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toRight = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(10.5, 31, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(16, 28, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
         
         TrajectorySequence toBackdropLeft = robot.trajectorySequenceBuilder(toLeft.end())
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
-                .forward(0.5)
+                .forward(0.2)
                 .strafeRight(8)
                 .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
                 .strafeRight(4)
-                .turn(Math.toRadians(3))
                 .back(8)
                 .build();
 
         TrajectorySequence toBackdropCenter = robot.trajectorySequenceBuilder(toCenter.end())
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
-                .forward(2)
+                .forward(5)
                 .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
-                .strafeLeft(6)
+                .strafeLeft(4)
                 .back(8)
                 .build();
 
         TrajectorySequence toBackdropRight = robot.trajectorySequenceBuilder(toRight.end())
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
-                .forward(2)
+                .forward(5)
                 .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
-                .turn(Math.toRadians(3))
                 .back(8)
-                .strafeLeft(7.25)
+                .strafeLeft(3)
                 .build();
 
 
@@ -178,7 +176,7 @@ public class BlueLeftFull extends LinearOpMode {
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
         robot.followTrajectory(forward);
-        robot.slidePivot.setPos(0.02f);
+        robot.slidePivot.setPos(0.03f);
         telemetry.addLine("Went forward");
         telemetry.addLine("Turning" + direction);
         telemetry.update();
@@ -198,14 +196,15 @@ public class BlueLeftFull extends LinearOpMode {
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
         robot.claw.setState(1);
-        sleep(500);
+        sleep(750);
         //robot.pivot.setState(0.8f);
         //robot.pivottwo.setState(0.8f);
         //sleep(500);
-        robot.slidePivot.setPos(0.165f);
+        robot.slidePivot.setPos(0.168f);
         robot.drawerSlide.setSlidePos(0.5f);
         robot.pivot.setState(0.4f);
         robot.pivottwo.setState(0.4f);
+        robot.claw.setState(0);
         sleep(500);
 
         switch (direction) {
@@ -226,17 +225,18 @@ public class BlueLeftFull extends LinearOpMode {
                 break;
         }
         robot.clawtwo.setState(1); // open
-        sleep(500);
-
-        Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
-                .lineToConstantHeading(new Vector2d(48,56)).build();
-
-        robot.followTrajectory(backward);
-        robot.pivot.setState(0.6f);
-        robot.pivottwo.setState(0.6f);
+        sleep(2000);
+        robot.drawerSlide.setSlidePos(0);
         robot.claw.setState(0);
         robot.clawtwo.setState(0);
-        robot.drawerSlide.goToSlidePos(0);
+        robot.pivot.setState(0.9f);
+        robot.pivottwo.setState(0.9f);
+
+        Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
+                .lineToConstantHeading(new Vector2d(48,50)).build();
+
+        robot.followTrajectory(backward);
+        sleep(500);
         robot.slidePivot.goToPos(0);
 
         double timeStart = runtime.milliseconds();

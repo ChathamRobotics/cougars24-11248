@@ -51,8 +51,8 @@ public class RedRightFull extends LinearOpMode {
         robot = new TeleopDrive(hardwareMap, Arrays.asList(ModuleIntegrator.Module.CLAWTWO, ModuleIntegrator.Module.DRAWERSLIDE, ModuleIntegrator.Module.PIVOT, ModuleIntegrator.Module.SLIDEPIVOT, ModuleIntegrator.Module.CLAW, ModuleIntegrator.Module.GUN, ModuleIntegrator.Module.PIVOTTWO, ModuleIntegrator.Module.WINCHSYSTEM, ModuleIntegrator.Module.WINCHLIFTONE, ModuleIntegrator.Module.WINCHLIFTTWO), SPEED);
 
         robot.clawtwo.setState(0);
-        robot.claw.setState(0);
-        robot.slidePivot.setPos(0.172f);
+        robot.claw.setState(0); //close ^
+        robot.slidePivot.setPos(0.2f);
         robot.pivot.setState(0.4f);
         robot.pivottwo.setState(0.4f);
 
@@ -65,15 +65,15 @@ public class RedRightFull extends LinearOpMode {
                 .build();
 
         Trajectory toRight = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(18, -31,Math.toRadians(180)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(14, -31,Math.toRadians(180)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toCenter = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(18, -34,Math.toRadians(-90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(17, -35,Math.toRadians(-87.5)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toLeft = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(16.5, -31, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(16, -32.5, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         TrajectorySequence toBackdropLeft = robot.trajectorySequenceBuilder(toLeft.end())
@@ -81,28 +81,25 @@ public class RedRightFull extends LinearOpMode {
                 .forward(0.5)
                 .splineToLinearHeading(Locations.backdropRed, Math.toRadians(180))
                 .strafeRight(8)
-                .turn(Math.toRadians(-3))
-                .back(14)
+                .back(6.5)
                 .build();
-        // j
 
         TrajectorySequence toBackdropCenter = robot.trajectorySequenceBuilder(toCenter.end())
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
                 .forward(2)
-                .splineToLinearHeading(Locations.backdropRed, Math.toRadians(180))
-                .back(14)
-                .strafeRight(2)
+                .splineToLinearHeading(Locations.backdropRed, Math.toRadians(183))
+                .back(4.7)
+                .strafeRight(3.5)
                 .build();
 
         TrajectorySequence toBackdropRight = robot.trajectorySequenceBuilder(toRight.end())
                 .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
-                .forward(2)
+                .forward(0.1)
                 .strafeLeft(16)
                 .back(18)
                 .splineToLinearHeading(Locations.backdropRed, Math.toRadians(180))
-                .turn(Math.toRadians(-3))
-                .back(16)
-                .strafeLeft(8)
+                .back(6)
+                .strafeLeft(5)
                 .build();
 
         telemetry.addData(">", "Robot Initialized!");
@@ -163,7 +160,7 @@ public class RedRightFull extends LinearOpMode {
             double x = (propRecognition.getLeft() + propRecognition.getRight()) / 2;
             double y = (propRecognition.getTop()  + propRecognition.getBottom()) / 2;
 
-            if (y < 330 && x > 320) {
+            if (y > 200 && x > 320) {
                 // center
                 direction = 2;
             } else {
@@ -176,7 +173,7 @@ public class RedRightFull extends LinearOpMode {
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
         robot.followTrajectory(forward);
-        robot.slidePivot.setPos(0);
+        robot.slidePivot.setPos(0.02f);
         telemetry.addLine("Went forward");
         telemetry.addLine("Turning" + direction);
         telemetry.update();
@@ -225,17 +222,17 @@ public class RedRightFull extends LinearOpMode {
                 break;
         }
         robot.clawtwo.setState(1); // open
-        sleep(500);
+        sleep(2000);
+        robot.drawerSlide.setSlidePos(0);
 
         Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
-                .lineToConstantHeading(new Vector2d(48,-55)).build();
+                .lineToConstantHeading(new Vector2d(48,-59)).build();
 
         robot.followTrajectory(backward);
-        robot.pivot.setState(0.6f);
-        robot.pivottwo.setState(0.6f);
+        robot.pivot.setState(0.9f);
+        robot.pivottwo.setState(0.9f);
         robot.clawtwo.setState(0); // close
         robot.claw.setState(0);
-        robot.drawerSlide.goToSlidePos(0);
         robot.slidePivot.goToPos(0);
 
         double timeStart = runtime.milliseconds();

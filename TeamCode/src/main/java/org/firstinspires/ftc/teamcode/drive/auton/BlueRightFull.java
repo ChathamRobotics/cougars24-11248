@@ -54,7 +54,7 @@ public class BlueRightFull extends LinearOpMode {
 
         robot.clawtwo.setState(0);
         robot.claw.setState(0); //close ^
-        robot.slidePivot.setPos(0.172f);
+        robot.slidePivot.setPos(0.2f);
         robot.pivot.setState(0.4f);
         robot.pivottwo.setState(0.4f);
 
@@ -64,21 +64,50 @@ public class BlueRightFull extends LinearOpMode {
 
 
         Trajectory forward = robot.trajectoryBuilder(startPos)
-                .forward(18, new TranslationalVelocityConstraint(20), new ProfileAccelerationConstraint(20))
+                .forward(23, new TranslationalVelocityConstraint(20), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toLeft = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(-18, 37, Math.toRadians(180)), new TranslationalVelocityConstraint(15),new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(-18.1, 34, Math.toRadians(180)), new TranslationalVelocityConstraint(15),new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toCenter = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(-18, 34, Math.toRadians(90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(-16, 36.5, Math.toRadians(90)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
         Trajectory toRight = robot.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(-14.5, 35, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
+                .lineToLinearHeading(new Pose2d(-13.8, 30, Math.toRadians(0)), new TranslationalVelocityConstraint(15), new ProfileAccelerationConstraint(20))
                 .build();
 
+        TrajectorySequence toBackdropLeft = robot.trajectorySequenceBuilder(toLeft.end())
+                .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
+                .forward(5)
+                .strafeLeft(20)
+                .lineToLinearHeading(new Pose2d(-30,8.5, Math.toRadians(-90)))
+                .strafeLeft(72)
+                .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
+                .strafeLeft(3)
+                .back(21)
+                .build();
+
+        TrajectorySequence toBackdropCenter = robot.trajectorySequenceBuilder(toCenter.end())
+                .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
+                .strafeLeft(20)
+                .lineToLinearHeading(new Pose2d(-30,8.5, Math.toRadians(-90)))
+                .strafeLeft(70)
+                .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
+                .back(21)
+                .build();
+
+        TrajectorySequence toBackdropRight = robot.trajectorySequenceBuilder(toRight.end())
+                .setVelConstraint(new MinVelocityConstraint(Arrays.asList(new TranslationalVelocityConstraint(15))))
+                .strafeRight(20)
+                .lineToLinearHeading(new Pose2d(-30,8.5, Math.toRadians(-90)))
+                .strafeLeft(70)
+                .splineToLinearHeading(Locations.backdropBlue, Math.toRadians(180))
+                .strafeRight(5)
+                .back(22)
+                .build();
 
         telemetry.addData(">", "Robot Initialized!");
         telemetry.addData(">", "Press start to start");
@@ -151,7 +180,7 @@ public class BlueRightFull extends LinearOpMode {
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
         robot.followTrajectory(forward);
-        robot.slidePivot.setPos(0.02f);
+        robot.slidePivot.setPos(0.03f);
         telemetry.addLine("Went forward");
         telemetry.addLine("Turning" + direction);
         telemetry.update();
@@ -171,29 +200,46 @@ public class BlueRightFull extends LinearOpMode {
         robot.pivot.setState(0.6f);
         robot.pivottwo.setState(0.6f);
         robot.claw.setState(1);
-        sleep(500);
-        //robot.pivot.setState(0.8f);
-        //robot.pivottwo.setState(0.8f);
-        //sleep(500);
-        robot.slidePivot.setPos(0.165f);
+        sleep(750);
+        robot.slidePivot.setPos(0.1f);
+        sleep(1000);
+
+        switch (direction) {
+            case 1:
+                robot.followTrajectorySequence(toBackdropLeft);
+                telemetry.addLine("Left");
+                telemetry.update();
+                break;
+            case 2:
+                robot.followTrajectorySequence(toBackdropCenter);
+                telemetry.addLine("Center");
+                telemetry.update();
+                break;
+            case 3:
+                robot.followTrajectorySequence(toBackdropRight);
+                telemetry.addLine("Right");
+                telemetry.update();
+                break;
+        }
+        robot.slidePivot.setPos(0.168f);
         robot.drawerSlide.setSlidePos(0.5f);
         robot.pivot.setState(0.4f);
         robot.pivottwo.setState(0.4f);
+        robot.claw.setState(0);
         sleep(500);
-
-
-
-        /**Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
-                .lineToConstantHeading(new Vector2d(48,56)).build();
-
-        robot.followTrajectory(backward);
-
-         **/
-        robot.pivot.setState(0.6f);
-        robot.pivottwo.setState(0.6f);
+        robot.clawtwo.setState(1); // open
+        sleep(2000);
+        robot.drawerSlide.setSlidePos(0);
         robot.claw.setState(0);
         robot.clawtwo.setState(0);
-        robot.drawerSlide.goToSlidePos(0);
+        robot.pivot.setState(0.9f);
+        robot.pivottwo.setState(0.9f);
+
+      Trajectory backward = robot.trajectoryBuilder(robot.getPoseEstimate())
+        .forward(8).build();
+
+       robot.followTrajectory(backward);
+        sleep(500);
         robot.slidePivot.goToPos(0);
 
         double timeStart = runtime.milliseconds();

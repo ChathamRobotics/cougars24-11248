@@ -51,6 +51,7 @@ public class SlidePivotModule {
                 } else {
                     if (clawLift.get(0).getCurrentPosition() > 10) {
                         motor.setPower(power);
+                        motor.setTargetPosition(motor.getCurrentPosition()); //new
                         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     } else {
                         motor.setTargetPosition(0);
